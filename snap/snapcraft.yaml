@@ -9,6 +9,15 @@ description: |
 
   The snap package source can be found at https://github.com/ogra1/qemu-virgil-snap
 
+  If your system supports kvm please make sure to connect the kvm interface after
+  you installed qemu-virgl.
+
+  sudo snap connect qemu-virgil:kvm
+
+  Then you can run the VM like below.
+
+  qemu-virgil -enable-kvm -m 512 -device virtio-vga,virgl=on -display sdl,gl=on -redir tcp:10022::22 some.img
+
 grade: stable
 confinement: strict
 
