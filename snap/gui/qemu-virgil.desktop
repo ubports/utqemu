@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=QEMU Virgil
+Comment=Run QEMU with Virgil 3D support
+Icon=${SNAP}/meta/gui/icon.png
+Exec=qemu-virgil
+Terminal=false
+Categories=Utility;
