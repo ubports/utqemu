@@ -54,6 +54,9 @@ parts:
       ./configure --target-list=x86_64-softmmu --prefix=/usr
       make
       make DESTDIR=$SNAPCRAFT_PART_INSTALL install
+      # fix execstack warning of review tools
+      rm -fv $SNAPCRAFT_PART_INSTALL/usr/share/qemu/s390-ccw.img
+      rm -fv $SNAPCRAFT_PART_INSTALL/usr/share/qemu/s390-netboot.img
     build-packages:
       - gettext
       - libaio-dev
