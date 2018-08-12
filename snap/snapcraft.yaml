@@ -1,8 +1,8 @@
 name: qemu-virgil
-version: '0.1'
+adopt-info: qemu
 summary: QEMU as a snap, built from latest git with some fancy graphics extras
 description: |
-  The latest QEMU from a snap package with GTK, SDL2 and Virgil 3D enabled
+  The latest QEMU as a snap package with GTK, SDL2 and Virgil 3D enabled
 
   To read more about QEMU see https://www.qemu.org/
   To read more about Virgil 3D support go to https://virgil3d.github.io/
@@ -57,6 +57,8 @@ parts:
       # fix execstack warning of review tools
       rm -fv $SNAPCRAFT_PART_INSTALL/usr/share/qemu/s390-ccw.img
       rm -fv $SNAPCRAFT_PART_INSTALL/usr/share/qemu/s390-netboot.img
+      # set version
+      snapcraftctl set-version "$(cat VERSION)"
     build-packages:
       - gettext
       - libaio-dev
