@@ -55,6 +55,7 @@ parts:
       make
       make DESTDIR=$SNAPCRAFT_PART_INSTALL install
     build-packages:
+      - gettext
       - libaio-dev
       - libbluetooth-dev
       - libbrlapi-dev
