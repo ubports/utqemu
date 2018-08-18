@@ -16,7 +16,7 @@ description: |
 
   Then you can run the VM like below.
 
-  qemu-virgil -enable-kvm -m 512 -device virtio-vga,virgl=on -display sdl,gl=on -redir tcp:10022::22 some.img
+  qemu-virgil -enable-kvm -m 512 -device virtio-vga,virgl=on -display sdl,gl=on -redir tcp:10022::22 -soundhw ac97 some.img
 
 grade: stable
 confinement: strict
@@ -27,6 +27,7 @@ apps:
     environment:
         LIBGL_DRIVERS_PATH: $SNAP/usr/lib/x86_64-linux-gnu/dri:/var/lib/snapd/lib/gl/xorg
         LD_LIBRARY_PATH: $SNAP/usr/lib/qemu:$SNAP/usr/lib/x86_64-linux-gnu/mesa:$SNAP/usr/lib/x86_64-linux-gnu/mesa-egl:$SNAP/usr/lib/x86_64-linux-gnu/dri:/var/lib/snapd/lib/gl/xorg:$SNAP/usr/lib/x86_64-linux-gnu/pulseaudio:$LD_LIBRARY_PATH
+        QEMU_AUDIO_DRV: pa
     plugs:
       - x11
       - kvm
@@ -60,7 +61,7 @@ parts:
     source: git://git.qemu.org/qemu.git
     plugin: nil
     override-build: |
-      ./configure --target-list=x86_64-softmmu --prefix=/usr
+      ./configure --target-list=x86_64-softmmu --audio-drv-list=pa --prefix=/usr
       make
       make DESTDIR=$SNAPCRAFT_PART_INSTALL install
       # fix execstack warning of review tools
@@ -102,6 +103,7 @@ parts:
       - zlib1g-dev
       - libnfs-dev
       - libiscsi-dev
+      - libpulse-dev
     stage-packages:
       - libegl1-mesa
       - libgl1-mesa-glx
