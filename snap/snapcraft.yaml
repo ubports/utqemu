@@ -18,12 +18,45 @@ description: |
 
   qemu-virgil -enable-kvm -m 512 -device virtio-vga,virgl=on -display sdl,gl=on -redir tcp:10022::22 -soundhw ac97 some.img
 
+  For qemu-system-arm and qemu-system-aarch64 VMs the snap ships the
+  qemu-virgil.arm and qemu-virgil.arm64 commands.
+
 grade: stable
 confinement: strict
 
 apps:
   qemu-virgil:
     command: usr/bin/qemu-system-x86_64
+    environment:
+        LIBGL_DRIVERS_PATH: $SNAP/usr/lib/x86_64-linux-gnu/dri:/var/lib/snapd/lib/gl/xorg
+        LD_LIBRARY_PATH: $SNAP/usr/lib/qemu:$SNAP/usr/lib/x86_64-linux-gnu/mesa:$SNAP/usr/lib/x86_64-linux-gnu/mesa-egl:$SNAP/usr/lib/x86_64-linux-gnu/dri:/var/lib/snapd/lib/gl/xorg:$SNAP/usr/lib/x86_64-linux-gnu/pulseaudio:$LD_LIBRARY_PATH
+        QEMU_AUDIO_DRV: pa
+    plugs:
+      - x11
+      - kvm
+      - pulseaudio
+      - desktop
+      - home
+      - opengl
+      - network
+      - network-bind
+  arm64:
+    command: usr/bin/qemu-system-aarch64
+    environment:
+        LIBGL_DRIVERS_PATH: $SNAP/usr/lib/x86_64-linux-gnu/dri:/var/lib/snapd/lib/gl/xorg
+        LD_LIBRARY_PATH: $SNAP/usr/lib/qemu:$SNAP/usr/lib/x86_64-linux-gnu/mesa:$SNAP/usr/lib/x86_64-linux-gnu/mesa-egl:$SNAP/usr/lib/x86_64-linux-gnu/dri:/var/lib/snapd/lib/gl/xorg:$SNAP/usr/lib/x86_64-linux-gnu/pulseaudio:$LD_LIBRARY_PATH
+        QEMU_AUDIO_DRV: pa
+    plugs:
+      - x11
+      - kvm
+      - pulseaudio
+      - desktop
+      - home
+      - opengl
+      - network
+      - network-bind
+  arm:
+    command: usr/bin/qemu-system-arm
     environment:
         LIBGL_DRIVERS_PATH: $SNAP/usr/lib/x86_64-linux-gnu/dri:/var/lib/snapd/lib/gl/xorg
         LD_LIBRARY_PATH: $SNAP/usr/lib/qemu:$SNAP/usr/lib/x86_64-linux-gnu/mesa:$SNAP/usr/lib/x86_64-linux-gnu/mesa-egl:$SNAP/usr/lib/x86_64-linux-gnu/dri:/var/lib/snapd/lib/gl/xorg:$SNAP/usr/lib/x86_64-linux-gnu/pulseaudio:$LD_LIBRARY_PATH
@@ -61,7 +94,7 @@ parts:
     source: git://git.qemu.org/qemu.git
     plugin: nil
     override-build: |
-      ./configure --target-list=x86_64-softmmu --audio-drv-list=pa --prefix=/usr
+      ./configure --target-list=x86_64-softmmu,aarch64-softmmu,arm-softmmu --audio-drv-list=pa --prefix=/usr
       make
       make DESTDIR=$SNAPCRAFT_PART_INSTALL install
       # fix execstack warning of review tools
@@ -70,6 +103,8 @@ parts:
       # set version
       snapcraftctl set-version "$(cat VERSION)"
     build-packages:
+      - bison
+      - flex
       - gettext
       - libaio-dev
       - libbluetooth-dev
