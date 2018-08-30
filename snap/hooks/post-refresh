@@ -1,0 +1,13 @@
+#! /bin/sh
+
+set -e
+
+ARCH_TRIPLET="x86_64-linux-gnu"
+GDK_PIXBUF_MODULE_FILE="$SNAP_DATA/.gdk-pixbuf-loaders.cache"
+FONTCONFIG_FILE="$SNAP_DATA/fonts.conf"
+
+LD_LIBRARY_PATH=$SNAP/usr/lib/$ARCH_TRIPLET \
+    GDK_PIXBUF_MODULEDIR=$SNAP/usr/lib/$ARCH_TRIPLET/gdk-pixbuf-2.0/2.10.0/loaders \
+    $SNAP/usr/lib/$ARCH_TRIPLET/gdk-pixbuf-2.0/gdk-pixbuf-query-loaders >$GDK_PIXBUF_MODULE_FILE
+
+sed "s;/usr;$SNAP/usr;" $SNAP/etc/fonts/fonts.conf >$FONTCONFIG_FILE
