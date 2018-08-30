@@ -44,7 +44,7 @@ apps:
       - opengl
       - network
       - network-bind
-      - unity
+      - unity7
       - wayland
   arm64:
     command: usr/bin/qemu-system-aarch64
@@ -65,7 +65,7 @@ apps:
       - opengl
       - network
       - network-bind
-      - unity
+      - unity7
       - wayland
   arm:
     command: usr/bin/qemu-system-arm
@@ -86,7 +86,7 @@ apps:
       - opengl
       - network
       - network-bind
-      - unity
+      - unity7
       - wayland
   qemu-img:
     command: usr/bin/qemu-img
