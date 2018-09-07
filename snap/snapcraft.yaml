@@ -115,7 +115,9 @@ parts:
     source: git://git.qemu.org/qemu.git
     plugin: nil
     override-build: |
-      ./configure --target-list=x86_64-softmmu,aarch64-softmmu,arm-softmmu --audio-drv-list=pa --prefix=/usr
+      set -e
+      ./configure --target-list=x86_64-softmmu,aarch64-softmmu,arm-softmmu \
+        --audio-drv-list=pa --prefix=/usr
       make
       make DESTDIR=$SNAPCRAFT_PART_INSTALL install
       # fix execstack warning of review tools
