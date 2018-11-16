@@ -42,6 +42,7 @@ apps:
       - desktop
       - home
       - opengl
+      - raw-usb
       - screen-inhibit-control
       - network
       - network-bind
@@ -64,6 +65,7 @@ apps:
       - desktop
       - home
       - opengl
+      - raw-usb
       - screen-inhibit-control
       - network
       - network-bind
@@ -86,6 +88,7 @@ apps:
       - desktop
       - home
       - opengl
+      - raw-usb
       - screen-inhibit-control
       - network
       - network-bind
@@ -148,6 +151,7 @@ parts:
       - libseccomp-dev
       - libsnappy-dev
       - libssh2-1-dev
+      - libusb-1.0-0-dev
       - libvde-dev
       - libvdeplug-dev
       - libvte-2.91-dev
