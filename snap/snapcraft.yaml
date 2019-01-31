@@ -16,7 +16,9 @@ description: |
 
   Then you can run the VM like below.
 
-  qemu-virgil -enable-kvm -m 512 -device virtio-vga,virgl=on -display sdl,gl=on -redir tcp:10022::22 -soundhw ac97 some.img
+  qemu-virgil -enable-kvm -m 512 -device virtio-vga,virgl=on -display sdl,gl=on \
+    -netdev user,id=ethernet.0,hostfwd=tcp::10022-:22 -device rtl8139,netdev=ethernet.0 \
+    -soundhw ac97 some.img
 
   For qemu-system-arm and qemu-system-aarch64 VMs the snap ships the
   qemu-virgil.arm and qemu-virgil.arm64 commands.
