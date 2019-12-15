@@ -8,6 +8,8 @@ grade: stable
 confinement: strict
 base: core18
 
+architectures: [amd64]
+
 apps:
   utqemu:
     command: usr/bin/utq.sh
@@ -73,6 +75,7 @@ parts:
       # fix execstack warning of review tools
       rm -fv $SNAPCRAFT_PART_INSTALL/usr/share/qemu/s390-ccw.img
       rm -fv $SNAPCRAFT_PART_INSTALL/usr/share/qemu/s390-netboot.img
+      rm -fv $SNAPCRAFT_PART_INSTALL/usr/share/qemu/openbios-ppc
     build-packages:
       - bison
       - flex
