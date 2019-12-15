@@ -1,37 +1,19 @@
-name: qemu-virgil
-adopt-info: qemu
-summary: QEMU as a snap, built from latest git with some fancy graphics extras
+name: utqemu
+version: 0.0.1
+summary: Ubuntu touch qemu
 description: |
-  The latest QEMU as a snap package with GTK, SDL2 and Virgil 3D enabled
-
-  To read more about QEMU see https://www.qemu.org/
-  To read more about Virgil 3D support go to https://virgil3d.github.io/
-
-  The snap package source can be found at https://github.com/ogra1/qemu-virgil-snap
-
-  If your system supports kvm please make sure to connect the kvm interface after
-  you installed qemu-virgl.
-
-  sudo snap connect qemu-virgil:kvm
-
-  Then you can run the VM like below.
-
-  qemu-virgil -enable-kvm -m 512 -device virtio-vga,virgl=on -display sdl,gl=on \
-    -netdev user,id=ethernet.0,hostfwd=tcp::10022-:22 -device rtl8139,netdev=ethernet.0 \
-    -soundhw ac97 some.img
-
-  For qemu-system-arm and qemu-system-aarch64 VMs the snap ships the
-  qemu-virgil.arm and qemu-virgil.arm64 commands.
+  Easy to run Ubuntu touch qemu virtual machine
 
 grade: stable
 confinement: strict
+base: core18
 
 apps:
-  qemu-virgil:
-    command: usr/bin/qemu-system-x86_64
+  utqemu:
+    command: usr/bin/utq.sh
     environment:
         LIBGL_DRIVERS_PATH: $SNAP/usr/lib/x86_64-linux-gnu/dri:/var/lib/snapd/lib/gl/xorg
-        LD_LIBRARY_PATH: $SNAP/usr/lib/qemu:$SNAP/usr/lib/x86_64-linux-gnu/mesa:$SNAP/usr/lib/x86_64-linux-gnu/mesa-egl:$SNAP/usr/lib/x86_64-linux-gnu/dri:/var/lib/snapd/lib/gl/xorg:$SNAP/usr/lib/x86_64-linux-gnu/pulseaudio:$LD_LIBRARY_PATH
+        LD_LIBRARY_PATH: $SNAP/usr/lib/x86_64-linux-gnu/ceph:$SNAP/usr/lib/qemu:$SNAP/usr/lib/x86_64-linux-gnu/mesa:$SNAP/usr/lib/x86_64-linux-gnu/mesa-egl:$SNAP/usr/lib/x86_64-linux-gnu/dri:/var/lib/snapd/lib/gl/xorg:$SNAP/usr/lib/x86_64-linux-gnu/pulseaudio:$LD_LIBRARY_PATH
         QEMU_AUDIO_DRV: pa
         FONTCONFIG_PATH: $SNAP/etc/fonts/conf.d
         FONTCONFIG_FILE: $SNAP_DATA/fonts.conf
@@ -51,62 +33,22 @@ apps:
       - network-control
       - unity7
       - wayland
-  arm64:
-    command: usr/bin/qemu-system-aarch64
-    environment:
-        LIBGL_DRIVERS_PATH: $SNAP/usr/lib/x86_64-linux-gnu/dri:/var/lib/snapd/lib/gl/xorg
-        LD_LIBRARY_PATH: $SNAP/usr/lib/qemu:$SNAP/usr/lib/x86_64-linux-gnu/mesa:$SNAP/usr/lib/x86_64-linux-gnu/mesa-egl:$SNAP/usr/lib/x86_64-linux-gnu/dri:/var/lib/snapd/lib/gl/xorg:$SNAP/usr/lib/x86_64-linux-gnu/pulseaudio:$LD_LIBRARY_PATH
-        QEMU_AUDIO_DRV: pa
-        FONTCONFIG_PATH: $SNAP/etc/fonts/conf.d
-        FONTCONFIG_FILE: $SNAP_DATA/fonts.conf
-        GDK_PIXBUF_MODULE_FILE: $SNAP_DATA/.gdk-pixbuf-loaders.cache
-        XDG_DATA_DIRS: $SNAP/usr/share
-    plugs:
-      - x11
-      - kvm
-      - pulseaudio
-      - desktop
-      - home
-      - opengl
-      - raw-usb
-      - screen-inhibit-control
-      - network
-      - network-bind
-      - network-control
-      - unity7
-      - wayland
-  arm:
-    command: usr/bin/qemu-system-arm
-    environment:
-        LIBGL_DRIVERS_PATH: $SNAP/usr/lib/x86_64-linux-gnu/dri:/var/lib/snapd/lib/gl/xorg
-        LD_LIBRARY_PATH: $SNAP/usr/lib/qemu:$SNAP/usr/lib/x86_64-linux-gnu/mesa:$SNAP/usr/lib/x86_64-linux-gnu/mesa-egl:$SNAP/usr/lib/x86_64-linux-gnu/dri:/var/lib/snapd/lib/gl/xorg:$SNAP/usr/lib/x86_64-linux-gnu/pulseaudio:$LD_LIBRARY_PATH
-        QEMU_AUDIO_DRV: pa
-        FONTCONFIG_PATH: $SNAP/etc/fonts/conf.d
-        FONTCONFIG_FILE: $SNAP_DATA/fonts.conf
-        GDK_PIXBUF_MODULE_FILE: $SNAP_DATA/.gdk-pixbuf-loaders.cache
-        XDG_DATA_DIRS: $SNAP/usr/share
-    plugs:
-      - x11
-      - kvm
-      - pulseaudio
-      - desktop
-      - home
-      - opengl
-      - raw-usb
-      - screen-inhibit-control
-      - network
-      - network-bind
-      - network-control
-      - unity7
-      - wayland
-  qemu-img:
-    command: usr/bin/qemu-img
-    plugs:
-      - home
 
 parts:
+  utq:
+    source: src/
+    plugin: dump
+    organize:
+      utq.sh: usr/bin/utq.sh
+    stage-packages:
+      - wget
+      - aria2
+      - pigz
+      - sshpass
+      - ssh-client
+      - libusb-1.0-0
   virgl:
-    source: git://anongit.freedesktop.org/virglrenderer
+    source: https://gitlab.freedesktop.org/virgl/virglrenderer.git
     plugin: autotools
     build-packages:
       - libgbm-dev
@@ -120,19 +62,17 @@ parts:
       - libepoxy0
   qemu:
     after: [ virgl ]
-    source: git://git.qemu.org/qemu.git
+    source: 	https://git.qemu.org/git/qemu.git
     plugin: nil
     override-build: |
       set -e
-      ./configure --target-list=x86_64-softmmu,aarch64-softmmu,arm-softmmu \
+      ./configure --target-list=x86_64-softmmu \
         --audio-drv-list=pa --prefix=/usr
       make
       make DESTDIR=$SNAPCRAFT_PART_INSTALL install
       # fix execstack warning of review tools
       rm -fv $SNAPCRAFT_PART_INSTALL/usr/share/qemu/s390-ccw.img
       rm -fv $SNAPCRAFT_PART_INSTALL/usr/share/qemu/s390-netboot.img
-      # set version
-      snapcraftctl set-version "$(cat VERSION)"
     build-packages:
       - bison
       - flex
@@ -183,9 +123,9 @@ parts:
       - libatk-bridge2.0-0
       - libatspi2.0-0
       - libbluetooth3
-      - libboost-iostreams1.58.0
-      - libboost-random1.58.0
-      - libboost-thread1.58.0
+      - libboost-iostreams1.65.1
+      - libboost-random1.65.1
+      - libboost-thread1.65.1
       - libbrlapi0.6
       - libcairo2
       - libcairo-gobject2
@@ -202,11 +142,11 @@ parts:
       - libheimbase1-heimdal
       - libheimntlm0-heimdal
       - libhx509-5-heimdal
-      - libiscsi2
+      - libiscsi7
       - libjpeg-turbo8
       - libkrb5-26-heimdal
       - libldap-2.4-2
-      - libnfs8
+      - libnfs11
       - libnspr4
       - libnss3
       - libnuma1
@@ -238,7 +178,7 @@ parts:
       - libxcb-shm0
       - libxcomposite1
       - libxcursor1
-      - libxen-4.6
+      - libxen-4.9
       - libxenstore3.0
       - libxi6
       - libxinerama1

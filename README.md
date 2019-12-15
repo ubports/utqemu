@@ -1,6 +1,7 @@
-[![Snap Status](https://build.snapcraft.io/badge/ogra1/qemu-virgil-snap.svg)](https://build.snapcraft.io/user/ogra1/qemu-virgil-snap)
+# Ubuntu touch qemu
 
-# qemu-virgil-snap
+Ubuntu touch qemu is an easy to use ubuntu touch emulator/virtual machine
 
+
+Snap parts are based on qemu-virgil 
 See https://snapcraft.io/qemu-virgil
-
