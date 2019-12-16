@@ -125,11 +125,6 @@ function ssh {
     exec $F_SSH phablet@localhost -p 10022 -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no"
 }
 
-function debug {
-    echo "Img file is here: ${IMG_FILE}"
-    exec $F_QEMU ${@:2}
-}
-
 function usage {
     echo "Ubuntu touch qemu - usage"
     echo "  utq start    - Stats qemu"
