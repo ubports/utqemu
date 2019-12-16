@@ -64,7 +64,7 @@ parts:
       - libepoxy0
   qemu:
     after: [ virgl ]
-    source: 	https://git.qemu.org/git/qemu.git
+    source: https://git.qemu.org/git/qemu.git
     plugin: nil
     override-build: |
       set -e
