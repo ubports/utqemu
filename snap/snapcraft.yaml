@@ -62,12 +62,9 @@ parts:
       - libgbm-dev
       - libdrm-dev
       - libegl1-mesa-dev
-      - libepoxy-dev
       - libgtk-3-dev
       - libsdl2-dev
       - libgles2-mesa-dev
-    stage-packages:
-      - libepoxy0
   qemu:
     after: [ virgl ]
     source: https://git.qemu.org/git/qemu.git
@@ -113,7 +110,6 @@ parts:
       - libxen-dev
       - liblzo2-dev
       - libx11-dev
-      - libepoxy-dev
       - libglib2.0-dev
       - libfdt-dev
       - libpixman-1-dev
