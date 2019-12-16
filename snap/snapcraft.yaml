@@ -43,15 +43,21 @@ parts:
     organize:
       utq.sh: usr/bin/utq.sh
     stage-packages:
-      - wget
       - aria2
       - pigz
       - sshpass
       - ssh-client
-      - libusb-1.0-0
+  epoxy:
+    source: https://github.com/anholt/libepoxy.git
+    source-commit: 5d818164dd2ab87b0054641f1446bc552a602320
+    plugin: meson
+    build-packages:
+      - libegl1-mesa-dev
   virgl:
+    after: [ epoxy ]
     source: https://gitlab.freedesktop.org/virgl/virglrenderer.git
-    plugin: autotools
+    source-commit: c162f33d5f30146ead05afe51ae6af8d13763e44
+    plugin: meson
     build-packages:
       - libgbm-dev
       - libdrm-dev
@@ -65,6 +71,7 @@ parts:
   qemu:
     after: [ virgl ]
     source: https://git.qemu.org/git/qemu.git
+    source-tag: v4.2.0
     plugin: nil
     override-build: |
       set -e
@@ -189,3 +196,4 @@ parts:
       - libxrender1
       - libxss1
       - ttf-ubuntu-font-family
+      - libusb-1.0-0
