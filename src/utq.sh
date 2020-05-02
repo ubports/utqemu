@@ -30,12 +30,13 @@ fi
 debug "Data dir is $DATA_DIR"
 
 UBPORTS_CI="https://ci.ubports.com/"
-AMD64_URL="${UBPORTS_CI}/job/rootfs/job/rootfs-generic-amd64/lastSuccessfulBuild/artifact/ubuntu-touch-mainline-generic-amd64.img.gz"
+AMD64_URL="${UBPORTS_CI}/job/rootfs/job/rootfs-generic-amd64/lastSuccessfulBuild/artifact/ubuntu-touch-mainline-generic-amd64.img.xz"
 IMG_FILE_NAME="ubuntu-touch-mainline-generic-amd64.img"
 IMG_FILE="${DATA_DIR}/${IMG_FILE_NAME}"
 
 F_WGET="wget"
 F_GZIP="gzip"
+F_XZ="xz"
 F_QEMU="qemu-system-x86_64"
 F_SSH="ssh"
 
@@ -68,7 +69,7 @@ function get_img {
     else
         $F_WGET -O "${IMG_FILE}.gz" ${AMD64_URL}
     fi
-    $F_GZIP -d "${IMG_FILE}.gz"
+    $F_XZ -d "${IMG_FILE}.xz"
 }
 
 function setup {
