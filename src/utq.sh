@@ -35,7 +35,6 @@ IMG_FILE_NAME="ubuntu-touch-mainline-generic-amd64.img"
 IMG_FILE="${DATA_DIR}/${IMG_FILE_NAME}"
 
 F_WGET="wget"
-F_GZIP="gzip"
 F_XZ="xz"
 F_QEMU="qemu-system-x86_64"
 F_SSH="ssh"
@@ -47,9 +46,9 @@ if [ ! "$UTQ_STADARD_TOOLS" == "1" ]; then
         F_WGET="aria2c"
     fi
 
-    if [ -x "$(command -v pigz)" ]; then
-        debug "Using pigz"
-        F_GZIP="pigz"
+    if [ -x "$(command -v pixz)" ]; then
+        debug "Using pixz"
+        F_XZ="pixz"
     fi
 
     if [ -x "$(command -v qemu-virgil)" ]; then
@@ -65,9 +64,9 @@ fi
 
 function get_img {
     if [ "$F_WGET" == "aria2c" ]; then
-        $F_WGET -d "$DATA_DIR" -o "${IMG_FILE_NAME}.gz" ${AMD64_URL}
+        $F_WGET -d "$DATA_DIR" -o "${IMG_FILE_NAME}.xz" ${AMD64_URL}
     else
-        $F_WGET -O "${IMG_FILE}.gz" ${AMD64_URL}
+        $F_WGET -O "${IMG_FILE}.xz" ${AMD64_URL}
     fi
     $F_XZ -d "${IMG_FILE}.xz"
 }
