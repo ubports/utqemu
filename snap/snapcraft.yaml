@@ -44,7 +44,7 @@ parts:
       utq.sh: usr/bin/utq.sh
     stage-packages:
       - aria2
-      - pigz
+      - pixz
       - sshpass
       - ssh-client
   epoxy:
