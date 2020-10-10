@@ -24,14 +24,14 @@ Ubuntu touch qemu - usage
   Default user:password is phablet:phablet
 ```
 
-##Troubleshooting
-###Problem:
-When running command ```utq start``` throws following error displayed:
- ```Display 'sdl' is not available``
- ####Solution: Change the display type to gtk.
+## Troubleshooting
+### Problem:
+When running command ``` utq start ``` throws following error displayed:
+ ``` Display 'sdl' is not available ```
+#### Solution: Change the display type to gtk.
  Make following changes in your utq.sh file.
  From: 
- '''function start_qemu {
+ ''' function start_qemu {
     exec $F_QEMU \
         -enable-kvm \
         -m 2G \
@@ -43,7 +43,7 @@ When running command ```utq start``` throws following error displayed:
 }
 '''
 To:
-'''function start_qemu {
+''' function start_qemu {
     exec $F_QEMU \
         -enable-kvm \
         -m 2G \
