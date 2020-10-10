@@ -26,7 +26,7 @@ Ubuntu touch qemu - usage
 
 ## Troubleshooting
 #### Problem:
-Running utq start command throws following error displayed:
+Running ``` utq start ``` command throws following error displayed:
  ``` 
  Display 'sdl' is not available 
  ```
