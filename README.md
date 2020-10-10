@@ -31,7 +31,7 @@ Running ` utq start ` command throws following error displayed:
  Display 'sdl' is not available 
  ```
 #### Solution: 
-Change the display type to gtk in utq.sh file.Make following changes in your utq.sh file.
+Change the display type to gtk in utq.sh file.Make following changes to your utq.sh file.
 
 ##### From: 
  ```
