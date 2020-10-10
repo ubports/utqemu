@@ -32,7 +32,8 @@ Running ``` utq start ``` command throws following error displayed:
  ```
 #### Solution: 
 Change the display type to gtk in utq.sh file.Make following changes in your utq.sh file.
- From: 
+
+##### From: 
  ```
  function start_qemu {
     exec $F_QEMU \
@@ -45,7 +46,7 @@ Change the display type to gtk in utq.sh file.Make following changes in your utq
         ${IMG_FILE}
 }
 ```
-To:
+##### To:
 ``` function start_qemu {
     exec $F_QEMU \
         -enable-kvm \
