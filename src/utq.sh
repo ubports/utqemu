@@ -88,7 +88,7 @@ function start_qemu {
         -enable-kvm \
         -m 2G \
         -device virtio-vga \
-        -display sdl,gl=on \
+        -display gtk,gl=on \
         -netdev user,id=ethernet.0,hostfwd=tcp::10022-:22 \
         -device rtl8139,netdev=ethernet.0 \
         ${IMG_FILE}
