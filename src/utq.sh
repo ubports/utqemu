@@ -87,7 +87,7 @@ function start_qemu {
     exec $F_QEMU \
         -enable-kvm \
         -m 2G \
-        -device virtio-vga,virgl=on \
+        -device virtio-vga \
         -display sdl,gl=on \
         -netdev user,id=ethernet.0,hostfwd=tcp::10022-:22 \
         -device rtl8139,netdev=ethernet.0 \
