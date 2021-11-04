@@ -127,7 +127,7 @@ function ssh {
 
 function usage {
     echo "Ubuntu touch qemu - usage"
-    echo "  utqemu start    - Stats qemu"
+    echo "  utqemu start    - Starts qemu"
     echo "  utqemu create   - Creates ubuntu touch qemu"
     echo "  utqemu recreate - reCreates ubuntu touch qemu"
     echo "  utqemu delete   - Deletes ubuntu touch qemu"
