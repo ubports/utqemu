@@ -16,10 +16,10 @@ sudo snap connect utqemu:kvm
 ```
 $ utqemu --help
 Ubuntu touch qemu - usage
-  utq start    - Stats qemu
-  utq create   - Creates ubuntu touch qemu
-  utq recreate - reCreates ubuntu touch qemu
-  utq delete   - Deletes ubuntu touch qemu
-  utq ssh      - ssh into running ubuntu touch qemu
+  utqemu start    - Stats qemu
+  utqemu create   - Creates ubuntu touch qemu
+  utqemu recreate - reCreates ubuntu touch qemu
+  utqemu delete   - Deletes ubuntu touch qemu
+  utqemu ssh      - ssh into running ubuntu touch qemu
   Default user:password is phablet:phablet
 ```
