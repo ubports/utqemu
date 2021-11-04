@@ -16,7 +16,7 @@ sudo snap connect utqemu:kvm
 ```
 $ utqemu --help
 Ubuntu touch qemu - usage
-  utqemu start    - Stats qemu
+  utqemu start    - Starts qemu
   utqemu create   - Creates ubuntu touch qemu
   utqemu recreate - reCreates ubuntu touch qemu
   utqemu delete   - Deletes ubuntu touch qemu
