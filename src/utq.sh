@@ -127,11 +127,11 @@ function ssh {
 
 function usage {
     echo "Ubuntu touch qemu - usage"
-    echo "  utq start    - Stats qemu"
-    echo "  utq create   - Creates ubuntu touch qemu"
-    echo "  utq recreate - reCreates ubuntu touch qemu"
-    echo "  utq delete   - Deletes ubuntu touch qemu"
-    echo "  utq ssh      - ssh into running ubuntu touch qemu"
+    echo "  utqemu start    - Starts qemu"
+    echo "  utqemu create   - Creates ubuntu touch qemu"
+    echo "  utqemu recreate - reCreates ubuntu touch qemu"
+    echo "  utqemu delete   - Deletes ubuntu touch qemu"
+    echo "  utqemu ssh      - ssh into running ubuntu touch qemu"
     echo "  Default user:password is phablet:phablet"
 }
 
